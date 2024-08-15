@@ -1,0 +1,42 @@
+<!-- app/views/projects/_form.html.erb -->
+<style>
+    .custom-form-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .custom-form-fieldset {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .custom-form-legend {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+</style>
+
+<div class="custom-form-container mt-4 " style="background-color: whitesmoke">
+  <%= form_with(model: project, local: true) do |form| %>
+    <fieldset class="custom-form-fieldset">
+      <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.text_area :description, class: "form-control", rows: 4 %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.submit class: "btn btn-primary" %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

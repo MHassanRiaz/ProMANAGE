@@ -1,0 +1,23 @@
+<!-- app/views/projects/_form.html.erb -->
+<style>
+   /* app/assets/stylesheets/custom_form.css */
+
+ .custom-form-container {
+   max-width: 600px;
+   margin: 0 auto;
+ }
+
+.custom-form-fieldset {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.custom-form-legend {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+}
+</style>
