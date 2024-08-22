@@ -1,6 +1,8 @@
 
 class User < ApplicationRecord
   has_many :projects, dependent: :destroy
+  has_and_belongs_to_many :projects
+  before_create :set_default_role
   validates :role, presence: true
 
   devise :database_authenticatable, :registerable,
@@ -29,6 +31,15 @@ class User < ApplicationRecord
   def allowed_to_create_projects?
     admin? || specific_role? # or you could add other conditions
   end
+
+  def archived_projects
+    # code here
+  end
+
+  def active_projects
+    # code here
+  end
+
   private
   def set_default_access
     self.has_access ||= false
@@ -37,6 +48,9 @@ class User < ApplicationRecord
   def specific_role?
     # code here
   end
+  private
 
-
+  def set_default_role
+    self.role ||= "user"
+  end
 end

@@ -1,75 +1,24 @@
-<!-- app/views/projects/index.html.erb -->
-<style>
-    .project-table-container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 1.5rem;
-    }
-
-    .project-table-container h1 {
-        margin-bottom: 1.5rem;
-        font-size: 2rem;
-        color: #343a40; /* Dark grey text color */
-    }
-
-    .project-table-container .btn {
-        margin-right: 0.5rem;
-    }
-
-    .project-table-container .btn:last-child {
-        margin-right: 0;
-    }
-
-    .table th, .table td {
-        vertical-align: middle;
-    }
-
-    .table td {
-        padding: 1rem;
-    }
-
-    .btn-primary {
-        background-color: #007bff; /* Bootstrap primary color */
-        border-color: #007bff;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3; /* Darker shade on hover */
-        border-color: #004085;
-    }
-
-    .btn-warning {
-        background-color: #ffc107; /* Bootstrap warning color */
-        border-color: #ffc107;
-    }
-
-    .btn-warning:hover {
-        background-color: #e0a800; /* Darker shade on hover */
-        border-color: #d39e00;
-    }
-
-    .btn-danger {
-        background-color: #dc3545; /* Bootstrap danger color */
-        border-color: #dc3545;
-    }
-
-    .btn-danger:hover {
-        background-color: #c82333; /* Darker shade on hover */
-        border-color: #bd2130;
-    }
-</style>
-
 <div class="container my-5">
   <div class="card">
     <div class="card-header">
-      <h1 class="card-title">Your Projects</h1>
+      <h1 class="card-title d-flex justify-content-between">
+        Projects
+      </h1>
     </div>
+
     <div class="card-body">
       <% if current_user.admin? %>
-        <%= link_to 'New Project', new_project_path, class: 'btn btn-primary mb-3' %>
-      <% else %>
-        <p class="text-muted">You are not allowed to create or edit projects.</p>
+        <%= link_to 'New Project', new_project_path, class: 'btn btn-primary btn-md' %>
       <% end %>
+      <br><br>
+      <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+          <%= link_to 'Active', projects_path(tab: 'active'), class: "nav-link #{params[:tab] != 'archived' ? 'active' : ''}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Archived', projects_path(tab: 'archived'), class: "nav-link #{params[:tab] == 'archived' ? 'active' : ''}" %>
+        </li>
+      </ul>
 
       <table class="table table-striped">
         <thead class="table-light">
@@ -82,12 +31,20 @@
         <tbody>
         <% @projects.each do |project| %>
           <tr>
-            <td><%= link_to project.name, project_path(project), class: "text-decoration-none" %></td>
-            <td><%= project.description.truncate(100) %></td>
+            <td><%= link_to project.name.truncate(18), project_path(project), class: "text-decoration-none" %></td>
+            <td><%= project.description.truncate(70) %></td>
             <td>
               <% if current_user.admin? %>
                 <%= link_to 'Edit', edit_project_path(project), class: "btn btn-warning btn-sm" %>
-                <%= link_to 'Delete', project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+                <% if project.archived? %>
+                  <%= form_with url: archive_project_path(project), method: :post, local: true, class: "d-inline" do %>
+                    <%= button_to 'Un-Archive', archive_project_path(project), method: :post, data: { confirm: 'Are you sure you want to un-archive this project?' }, class: "btn btn-danger btn-sm" %>
+                  <% end %>
+                <% else %>
+                  <%= form_with url: archive_project_path(project), method: :post, local: true, class: "d-inline" do %>
+                    <%= button_to 'Archive', archive_project_path(project), method: :post, data: { confirm: 'Are you sure you want to archive this project?' }, class: "btn btn-danger btn-sm" %>
+                  <% end %>
+                <% end %>
               <% end %>
             </td>
           </tr>

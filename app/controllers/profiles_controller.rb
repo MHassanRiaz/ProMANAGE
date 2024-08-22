@@ -1,54 +1,59 @@
-# app/controllers/profiles_controller.rb
 class ProfilesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:update]
   before_action :authenticate_user!
-  before_action :admin_only, only: [ :new, :create ]
-  before_action :check_access, only: [ :index, :show ]
-  before_action :admin_only, only: [ :edit, :update ]
+  before_action :set_user, only: [:show, :edit, :update]
+  before_action :check_access, only: [:show, :edit, :update]
+  before_action :admin_only, only: [:edit, :update]
+
   def show
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def edit
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def update
-    @user = current_user
     if @user.update(user_params)
-      redirect_to profile_path, notice: "Profile updated successfully."
+      flash[:success] = "Profile updated successfully."
+      redirect_to profile_path
     else
+      flash.now[:error] = "There was an error updating the profile."
       render :edit
     end
   end
 
   def index
-    # code here
+    # code here (if needed for user profiles listing)
   end
 
   def new
-    # code here
+    # code here (if needed for creating a new profile)
   end
 
   def create
-    # code here
+    # code here (if needed for creating a new profile)
   end
-
 
   private
 
-  def admin_only
-    unless current_user.admin?
-      redirect_to root_path, alert: "You are not authorized to create a project."
-    end
+  def set_user
+    @user = current_user
   end
 
   def check_access
-    unless current_user.has_access || current_user.admin?
-      redirect_to root_path, alert: "You do not have access to view projects."
+    unless current_user == @user || current_user.admin?
+      flash[:alert] = "You do not have access to view this resource."
+      redirect_to root_path
     end
   end
-  private
+
+  def admin_only
+    unless current_user.admin?
+      flash[:alert] = "You are not authorized to perform this action."
+      redirect_to root_path
+    end
+  end
 
   def user_params
     params.require(:user).permit(:name, :phone_number, :email, :designation, :company_name, :password, :password_confirmation)

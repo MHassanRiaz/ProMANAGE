@@ -6,3 +6,12 @@ import "controllers"
 //= require bootstrap-sprockets
 //= require bootstrap
 //= require_tree .
+// app/javascript/packs/application.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.clickable-row').forEach(row => {
+        row.addEventListener('click', () => {
+            window.location.href = row.getAttribute('data-href');
+        });
+    });
+});

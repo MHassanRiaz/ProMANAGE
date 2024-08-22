@@ -1,37 +1,6 @@
-<!-- app/views/layouts/_navbar.html.erb -->
-<style>
-    /* app/assets/stylesheets/application.scss */
-    .navbar {
-        font-family: 'Arial', sans-serif;
-        font-size: 1rem;
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.25rem;
-        }
-
-        .nav-link {
-            color: #333;
-            transition: color 0.3s ease;
-
-            &:hover {
-                color: #0056b3;
-            }
-        }
-
-        .nav-item {
-            margin-left: 1rem;
-        }
-
-        .shadow-sm {
-            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
-        }
-    }
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class=" navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">PRO MANAGE</a>
+    <%= image_tag "logo.png", alt: "Pro Manage", width: "180", height: "40" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,14 +9,19 @@
         <li class="nav-item">
           <%= link_to "Home", root_path, class: "nav-link" %>
         </li>
+        <% if user_signed_in? && current_user.admin? %>
+          <li class="nav-item">
+            <%= link_to "Project Assignment", project_assignment_admin_users_path, class: "nav-link" %>
+          </li>
+        <% end %>
         <% if user_signed_in? %>
           <% if current_user.admin? %>
             <li class="nav-item">
-              <%= link_to "User List", admin_users_path, class: "nav-link" %>
+              <%= link_to "Resource", admin_users_path, class: "nav-link" %>
             </li>
           <% end %>
           <li class="nav-item">
-            <%= link_to current_user.name, profile_path, class: 'nav-link' %>
+            <%= link_to current_user.name, profile_path(current_user), class: 'nav-link' if current_user.present? %>
           </li>
           <li class="nav-item">
             <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link' %>

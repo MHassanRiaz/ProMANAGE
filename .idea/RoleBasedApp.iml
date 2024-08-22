@@ -51,6 +51,7 @@
     <orderEntry type="library" scope="PROVIDED" name="brakeman (v6.1.2, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.3.0, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.5.16, asdf: 3.3.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="cancancan (v3.6.1, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capybara (v3.40.0, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.3.4, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="connection_pool (v2.4.1, asdf: 3.3.3) [gem]" level="application" />
@@ -154,6 +155,7 @@
         <option value="active_record:multi_db" />
         <option value="application_record" />
         <option value="benchmark" />
+        <option value="cancan:ability" />
         <option value="channel" />
         <option value="controller" />
         <option value="devcontainer" />
@@ -196,6 +198,7 @@
         <option value="active_record:multi_db" />
         <option value="application_record" />
         <option value="benchmark" />
+        <option value="cancan:ability" />
         <option value="channel" />
         <option value="controller" />
         <option value="devcontainer" />

@@ -1,23 +1,30 @@
-<!-- app/views/devise/shared/_links.html.erb -->
+<div class="devise-links text-center">
+  <% if controller_name != 'sessions' %>
+    <div>
+      <%= link_to "Log in", new_session_path(resource_name) %>
+    </div>
+  <% end %>
 
-<%- if controller_name != 'sessions' %>
-  <div class="mb-2">
-    <%= link_to "Log in", new_session_path(resource_name) %>
-  </div>
-<% end %>
+  <% if controller_name != 'registrations' && devise_mapping.registerable? %>
+    <div>
+      <%= link_to "Sign up", new_registration_path(resource_name) %>
+    </div>
+  <% end %>
 
-<%- if controller_name != 'registrations' && devise_mapping.registerable? %>
-  <div class="mb-2">
-    <%= link_to "Sign up", new_registration_path(resource_name) %>
-  </div>
-<% end %>
+  <% if controller_name != 'passwords' %>
+    <div>
+      <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+      <% if devise_mapping.confirmable? %>
+        <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
-<%- if controller_name != 'passwords' %>
-  <div class="mb-2">
-    <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
-    <% if devise_mapping.confirmable? %>
-      <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
-    <% end %>
-    <!-- Unlock-related code removed -->
-  </div>
-<% end %>
+<style>
+    .devise-links{
+        display: block;
+        margin-bottom: 10px; /* Adjust margin as needed */
+        text-align: center;
+    }
+</style>

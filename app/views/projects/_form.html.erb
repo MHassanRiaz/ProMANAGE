@@ -1,37 +1,56 @@
-<!-- app/views/projects/_form.html.erb -->
-<style>
-    .custom-form-container {
-        max-width: 600px;
-        margin: 0 auto;
-    }
+<div>
+  <!-- Flash Notices -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= flash[:notice] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% elsif flash[:alert] %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= flash[:alert] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
 
-    .custom-form-fieldset {
-        border: 1px solid #ddd;
-        padding: 20px;
-        border-radius: 8px;
-    }
-
-    .custom-form-legend {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-    }
-</style>
-
-<div class="custom-form-container mt-4 " style="background-color: whitesmoke">
   <%= form_with(model: project, local: true) do |form| %>
-    <fieldset class="custom-form-fieldset">
+    <fieldset>
+      <!-- Displaying Errors -->
+      <% if project.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">There were some errors:</h4>
+          <ul>
+            <% project.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <div class="mb-3">
         <%= form.label :name, class: "form-label" %>
         <%= form.text_field :name, class: "form-control" %>
       </div>
 
       <div class="mb-3">
+        <%= form.label :client_name, "Client Name", class: "form-label" %>
+        <%= form.text_field :client_name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :url, "Project URL", class: "form-label" %>
+        <%= form.text_field :url, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :technology_stack, "Technology Stack", class: "form-label" %>
+        <div id="tech-stack-container" class="d-flex flex-wrap justify-content-center mb-2"></div>
+        <input type="text" id="tech-stack-input" class="form-control mt-2" placeholder="Enter a technology and press Enter">
+        <label for="tech-stack-input"><%= form.hidden_field :technology_stack, id: "technology_stack_hidden", value: @project.technology_stack %></label>
+      </div>
+
+      <div class="mb-3">
         <%= form.label :description, class: "form-label" %>
-        <%= form.text_area :description, class: "form-control", rows: 4 %>
+        <%= form.text_area :description, class: "form-control", rows: 9 %>
       </div>
 
       <div class="mb-3">

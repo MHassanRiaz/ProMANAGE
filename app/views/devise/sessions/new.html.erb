@@ -32,9 +32,18 @@
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <%= render "devise/shared/links" %>
+          <%= render "devise/shared/links",class: "text-center"%>
         </div>
       </div>
     </div>
   </div>
 </div>
+<style>
+.card-footer {
+text-align: center;
+}
+
+.card-footer .text-center {
+margin-top: 1rem;
+}
+</style>

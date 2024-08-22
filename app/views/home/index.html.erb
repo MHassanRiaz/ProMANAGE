@@ -1,138 +1,74 @@
-<!-- app/views/home/index.html.erb -->
-<div class="container py-5">
-  <style>
-      .jumbotron {
-          background-color: #f8f9fa; /* Light grey background */
-          border-radius: 0.5rem;
-          padding: 2rem;
-      }
-
-      .card {
-          border: 1px solid #dee2e6; /* Light grey border */
-          border-radius: 0.5rem;
-      }
-
-      .card-title a {
-          color: #007bff; /* Bootstrap primary color */
-          text-decoration: none;
-      }
-
-      .card-title a:hover {
-          text-decoration: underline;
-      }
-
-      .btn-info {
-          background-color: #17a2b8; /* Custom blue color */
-          border-color: #17a2b8;
-      }
-
-      .btn-info:hover {
-          background-color: #138496; /* Darker shade on hover */
-          border-color: #117a8b;
-      }
-
-      .btn-warning {
-          background-color: #ffc107; /* Custom yellow color */
-          border-color: #ffc107;
-      }
-
-      .btn-warning:hover {
-          background-color: #e0a800; /* Darker shade on hover */
-          border-color: #d39e00;
-      }
-
-      .btn-danger {
-          background-color: #dc3545; /* Custom red color */
-          border-color: #dc3545;
-      }
-
-      .btn-danger:hover {
-          background-color: #c82333; /* Darker shade on hover */
-          border-color: #bd2130;
-      }
-
-      .alert-info {
-          background-color: #d1ecf1; /* Light blue background for alerts */
-          color: #0c5460; /* Darker text color */
-          border-color: #bee5eb; /* Light blue border */
-      }
-
-      .alert-info a {
-          color: #0c5460; /* Darker text color for links in alert */
-      }
-
-      .alert-info a:hover {
-          color: #004085; /* Darker shade on hover */
-      }
-  </style>
-
-  <div class="jumbotron text-center mb-4">
-    <h1 class="display-4">WELCOME TO PRO MANAGE</h1>
-    <p class="lead">Project Management System</p>
-    <hr class="my-4">
-  </div>
-
+<div class="container py-2">
   <% if user_signed_in? %>
-    <% if current_user.admin? %>
-      <div class="mb-4">
-        <h2>Your Projects</h2>
-        <% if @projects.any? %>
-          <div class="row">
-            <% @projects.each do |project| %>
-              <div class="col-md-4 mb-3">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title"><%= link_to project.name, project_path(project) %></h5>
-                    <p class="card-text"><%= project.description.truncate(100) %></p>
-                    <%= link_to 'View', project_path(project), class: "btn btn-info btn-sm" %>
-                    <%= link_to 'Edit', edit_project_path(project), class: "btn btn-warning btn-sm ms-2" %>
-                    <%= link_to 'Delete', project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm ms-2" %>
-                  </div>
+    <div class="mb-4 project">
+      <h2>Projects</h2>
+      <% if @projects.any? %>
+        <div class="row">
+          <% @projects.each do |project| %>
+            <div class="col-md-4 mb-3">
+              <div class="card card-smoke-white h-80 shadow-sm border-0">
+                <div class="card-body">
+                  <!-- Truncate the project title to 16 characters -->
+                  <h5 class="card-title">
+                    <%= link_to truncate(project.name, length: 28), project_path(project), class: "text-decoration-none text-dark" %>
+                  </h5>
+
+                  <!-- Technology Stack -->
+                  <% if project.technology_stack.present? %>
+                    <div class="technology-stack mb-2">
+                      <div class="d-flex flex-wrap">
+                        <% project.technology_stack.split(',').each do |tech| %>
+                          <span class="badge bg-secondary me-2 mb-2"><%= tech.strip %></span>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+
+                  <!-- URL -->
+                  <% if project.url.present? %>
+                    <div class="d-flex align-items-center mb-2">
+                      <strong><span class="me-2">URL:</span></strong>
+                      <%= link_to "See Project Here", project.url, class: "text-dark text-decoration-none", target: "_blank" %>
+                    </div>
+                  <% end %>
+
+                  <!-- Client Name -->
+                  <% if project.client_name.present? %>
+                    <div class="d-flex align-items-center mb-2">
+                      <strong><span class="me-2">Client:</span></strong>
+                      <%= project.client_name %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                  <%= link_to 'View Project', project_path(project), class: "btn btn-outline-primary btn-sm" %>
                 </div>
               </div>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="alert alert-info">
-            You have no projects.
-          </div>
-        <% end %>
-
-        <div class="mt-3">
-          <%= link_to 'View All Projects', projects_path, class: "btn btn-primary" %>
-          <%= link_to 'Create New Project', new_project_path, class: "btn btn-success ms-2" %>
-        </div>
-      </div>
-
-    <% else %>
-      <% if @projects.any? %>
-        <div class="mb-4">
-          <h2>Projects</h2>
-          <div class="row">
-            <% @projects.each do |project| %>
-              <% if current_user.can_view_project?(project) %>
-                <div class="col-md-4 mb-3">
-                  <div class="card" style="background-color: whitesmoke">
-                    <div class="card-body" style="background-color: whitesmoke">
-                      <h5 class="card-title"><%= link_to project.name, project_path(project) %></h5>
-                      <p class="card-text"><%= project.description.truncate(100) %></p>
-                      <%= link_to 'View', project_path(project), class: "btn btn-info btn-sm" %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       <% else %>
         <div class="alert alert-info">
-          You have no projects available to view.
+          You have no active projects.
         </div>
       <% end %>
-    <% end %>
+
+      <% if current_user.admin? %>
+        <div class="mt-4 d-flex justify-content-center">
+          <%= link_to 'View All Projects', projects_path, class: "btn btn-primary btn-lg me-2" %>
+          <%= link_to 'Create New Project', new_project_path, class: "btn btn-success btn-lg" %>
+        </div>
+      <% end %>
+    </div>
   <% else %>
-    <div class="alert alert-info">
-      Please <%= link_to 'log in', new_user_session_path %> or <%= link_to 'sign up', new_user_registration_path %> to manage your projects.
+    <div class="alert alert-info text-center">
+      Please <%= link_to 'log in', new_user_session_path, class: "alert-link" %> or <%= link_to 'sign up', new_user_registration_path, class: "alert-link" %> to manage your projects.
     </div>
   <% end %>
 </div>
+
+<style>
+    .card-smoke-white {
+        background-color: #f5f5f5; /* Smoke white color */
+    }
+</style>

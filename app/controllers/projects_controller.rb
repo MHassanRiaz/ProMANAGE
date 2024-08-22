@@ -1,14 +1,26 @@
-# app/controllers/projects_controller.rb
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [ :show, :edit, :update, :destroy ]
-  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
-  before_action :authorize_admin!, only: [ :new, :create ]
+  before_action :set_project, only: [:show, :edit, :update, :archive, :activate]
+  before_action :authorize_user!, only: [:edit, :update, :archive]
+  before_action :authorize_admin!, only: [:new, :create, :archive]
+
   def index
-    @projects = current_user.admin? ? Project.all : current_user.projects
+    if params[:tab] == "archived"
+      @projects = Project.where(archived: true)
+    else
+      @projects = Project.where(archived: false)
+    end
   end
 
-  def show
+  def activate
+    @project.update(archived: false)
+    redirect_to projects_path(tab: "active"), notice: "Project has been activated."
+  end
+
+  def archive
+    @project.update(archived: !@project.archived?) # Toggle archived state
+    flash[:notice] = @project.archived? ? "Project was successfully archived." : "Project was successfully activated."
+    redirect_to projects_path(tab: params[:tab])
   end
 
   def new
@@ -17,10 +29,13 @@ class ProjectsController < ApplicationController
 
   def create
     @project = current_user.projects.build(project_params)
+    @project.user = current_user
+    @project.archived = false # Ensure new projects are active by default
     if @project.save
       redirect_to @project, notice: "Project was successfully created."
     else
       render :new
+
     end
   end
 
@@ -35,9 +50,8 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def destroy
-    @project.destroy
-    redirect_to projects_path, notice: "Project was successfully deleted."
+  def show
+    @assigned_users = @project.users
   end
 
   private
@@ -47,17 +61,14 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :client_name, :description, :technology_stack, :url)
   end
 
   def authorize_user!
     redirect_to projects_path, alert: "You are not authorized to perform this action." unless current_user.admin? || @project.user == current_user
   end
-  private
 
   def authorize_admin!
-    unless current_user.admin? || current_user.allowed_to_create_projects?
-      redirect_to root_path, alert: "You are not authorized to create a project."
-    end
+    redirect_to root_path, alert: "You are not authorized to create a project." unless current_user.admin?
   end
 end

@@ -1,42 +1,9 @@
 <!-- app/views/admin/users/index.html.erb -->
 
-  <style>
-      .table-header {
-          background-color: #f8f9fa; /* Light grey background for table headers */
-          color: #495057; /* Dark grey text color */
-      }
-
-      .table-hover tbody tr:hover {
-          background-color: #e9ecef; /* Light grey background on hover */
-      }
-
-      .card {
-          border: 1px solid #dee2e6; /* Light grey border */
-          border-radius: 0.5rem;
-      }
-
-      .btn-info {
-          background-color: #17a2b8; /* Custom blue color */
-          border-color: #17a2b8;
-      }
-
-      .btn-info:hover {
-          background-color: #138496; /* Darker shade on hover */
-          border-color: #117a8b;
-      }
-
-      .table th, .table td {
-          vertical-align: middle;
-      }
-
-      .table td {
-          padding: 1rem;
-      }
-  </style>
 <div class="container my-5">
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">User Management</h4>
+      <h4 class="card-title">Resource Management</h4>
     </div>
     <div class="card-body">
       <table class="table table-hover">
@@ -45,20 +12,21 @@
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
-          <th>Has Access to Projects</th>
           <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <% @users.each do |user| %>
-          <tr>
+          <tr data-href="<%= profile_path(user) %>" class="clickable-row">
             <td><%= user.name %></td>
             <td><%= user.email %></td>
             <td><%= user.role %></td>
-            <td><%= user.has_access ? "Yes" : "No" %></td>
             <td>
-              <% if current_user.admin? %>
-                <%= link_to "Switch", switch_user_path(scope_identifier: "user_#{user.id}"), method: :post, class: "btn btn-info btn-sm" %>
+              <% if user.role != 'admin' %>
+                <%= form_with(url: switch_user_path, method: :get, local: true) do %>
+                  <%= hidden_field_tag :scope_identifier, "user_#{user.id}" %>
+                  <%= submit_tag "Switch", class: "btn btn-primary" %>
+                <% end %>
               <% end %>
             </td>
           </tr>

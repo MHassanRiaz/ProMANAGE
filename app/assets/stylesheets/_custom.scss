@@ -1,6 +1,3 @@
-<!-- app/views/projects/_form.html.erb -->
-<style>
-   /* app/assets/stylesheets/custom_form.css */
 
  .custom-form-container {
    max-width: 600px;
@@ -20,5 +17,424 @@
   padding: 10px;
   border-radius: 5px;
 }
-</style>
-@import "custom_bootstrap.scss";
+
+ .jumbotron {
+   background-color: #f8f9fa; /* Light grey background */
+   border-radius: 0.5rem;
+   padding: 2rem;
+ }
+
+ .card {
+   border: 1px solid #dee2e6; /* Light grey border */
+   border-radius: 0.5rem;
+   background-color: #f8f9fa;
+ }
+
+ .card-title a {
+   color: #007bff; /* Bootstrap primary color */
+   text-decoration: none;
+ }
+
+ .card-title a:hover {
+   text-decoration: underline;
+ }
+
+ .btn-info {
+   background-color: #17a2b8; /* Custom blue color */
+   border-color: #17a2b8;
+ }
+
+ .btn-info:hover {
+   background-color: #138496; /* Darker shade on hover */
+   border-color: #117a8b;
+ }
+
+ .btn-warning {
+   background-color: #ffc107; /* Custom yellow color */
+   border-color: #ffc107;
+ }
+
+ .btn-warning:hover {
+   background-color: #e0a800; /* Darker shade on hover */
+   border-color: #d39e00;
+ }
+
+ .btn-danger {
+   background-color: #dc3545; /* Custom red color */
+   border-color: #dc3545;
+ }
+
+ .btn-danger:hover {
+   background-color: #c82333; /* Darker shade on hover */
+   border-color: #bd2130;
+ }
+
+ .alert-info {
+   background-color: #d1ecf1; /* Light blue background for alerts */
+   color: #0c5460; /* Darker text color */
+   border-color: #bee5eb; /* Light blue border */
+ }
+
+ .alert-info a {
+   color: #0c5460; /* Darker text color for links in alert */
+ }
+
+ .alert-info a:hover {
+   color: #004085; /* Darker shade on hover */
+ }
+  //Show.html
+  .project-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.3rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+.heading{
+  display: inline-block
+}
+ .project-details h1 {
+   font-size: 2rem;
+   margin-bottom: 1rem;
+ }
+
+ .project-details p {
+   font-size: 1.125rem;
+   margin-bottom: 1.5rem;
+ }
+
+ .project-details .btn {
+   margin-right: 0.5rem;
+ }
+
+ .project-details .btn:last-child {
+   margin-right: 0;
+ }
+
+ .dropdown-menu {
+   max-height: 300px;
+   overflow-y: auto;
+ }
+
+ //User index
+ .table-header {
+   background-color: #f8f9fa; /* Light grey background for table headers */
+   color: #495057; /* Dark grey text color */
+ }
+
+ .table-hover tbody tr:hover {
+   background-color: #e9ecef; /* Light grey background on hover */
+ }
+
+ .card {
+   border: 1px solid #dee2e6; /* Light grey border */
+   border-radius: 0.5rem;
+ }
+
+ .btn-info {
+   background-color: #17a2b8; /* Custom blue color */
+   border-color: #17a2b8;
+ }
+
+ .btn-info:hover {
+   background-color: #138496; /* Darker shade on hover */
+   border-color: #117a8b;
+ }
+
+ .table th, .table td {
+   vertical-align: middle;
+ }
+
+ .table td {
+   padding: 1rem;
+ }
+ //nav
+ .navbar {
+   font-family: 'Arial', sans-serif;
+   font-size: 1rem;
+
+   .navbar-brand {
+     font-weight: bold;
+     font-size: 1.25rem;
+   }
+
+   .nav-link {
+     color: #333;
+     transition: color 0.3s ease;
+     font-weight: bold;
+
+     &:hover {
+       color: #0056b3;
+     }
+   }
+
+   .nav-item {
+     margin-left: 1rem;
+   }
+
+   .shadow-sm {
+     box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+   }
+ }
+ //project/new.html.erb
+
+ .page-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
+ }
+
+
+ //project/index.html.erb
+ .project-table-container {
+   max-width: 1000px;
+   margin: 0 auto;
+   padding: 1.5rem;
+ }
+
+ .project-table-container h1 {
+   margin-bottom: 1.5rem;
+   font-size: 2rem;
+   color: #343a40; /* Dark grey text color */
+ }
+
+ .project-table-container .btn {
+   margin-right: 0.5rem;
+ }
+
+ .project-table-container .btn:last-child {
+   margin-right: 0;
+ }
+
+ .table th, .table td {
+   vertical-align: middle;
+ }
+
+ .table td {
+   padding: 1rem;
+ }
+
+ .btn-primary {
+   background-color: #007bff; /* Bootstrap primary color */
+   border-color: #007bff;
+ }
+
+ .btn-primary:hover {
+   background-color: #0056b3; /* Darker shade on hover */
+   border-color: #004085;
+ }
+
+ .btn-warning {
+   background-color: #ffc107; /* Bootstrap warning color */
+   border-color: #ffc107;
+ }
+
+ .btn-warning:hover {
+   background-color: #e0a800; /* Darker shade on hover */
+   border-color: #d39e00;
+ }
+
+ .btn-danger {
+   background-color: #dc3545; /* Bootstrap danger color */
+   border-color: #dc3545;
+ }
+
+ .btn-danger:hover {
+   background-color: #c82333; /* Darker shade on hover */
+   border-color: #bd2130;
+ }
+
+ .nav-tabs .nav-link {
+   cursor: pointer;}
+//app/views/projects/_form.html.erb
+  .custom-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+ .custom-form-fieldset {
+   border: 1px solid #ddd;
+   padding: 20px;
+   border-radius: 8px;
+ }
+
+ .custom-form-legend {
+   font-size: 1.5rem;
+   margin-bottom: 20px;
+   background-color: #f8f9fa;
+   padding: 10px;
+   border-radius: 5px;
+   border: 1px solid #ddd;
+ }
+ //
+
+  body {
+    background-color: #f8f9fa;
+  }
+
+ .project h2{
+   font-weight: bolder;
+   color: #343a40;
+
+ }
+ .card {
+   transition: transform 0.2s ease-in-out;
+ }
+
+ .card:hover {
+   transform: translateY(-5px);
+ }
+
+ .card-footer {
+   display: flex;
+   justify-content: flex-end;
+ }
+
+ .btn-lg {
+   padding: 0.75rem 1.5rem;
+ }
+
+ .alert-info {
+   background-color: #e9f7fa;
+   border-color: #d1eef2;
+   color: #0c5460;
+ }
+ #tech-stack-container .badge {
+   padding: 0.5em 1em;
+   display: inline-block;
+   background-color: #6c757d;
+   color: #fff;
+   border-radius: 0.25rem;
+ }
+
+ #tech-stack-container .badge .cursor-pointer {
+   cursor: pointer;
+ }
+ #tech-stack-container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center; /* Center items horizontally */
+   gap: 0.5rem; /* Space between tags */
+ }
+
+ .tech-tag {
+   display: flex;
+   align-items: center;
+   background-color: #f8f9fa;
+   border: 1px solid #ced4da;
+   border-radius: 0.25rem;
+   padding: 0.25rem 0.5rem;
+   margin: 0.2rem;
+ }
+
+ .tech-tag .close-btn {
+   margin-left: 0.5rem;
+   cursor: pointer;
+   font-size: 1.25rem;
+   line-height: 1;
+   color: white; /* Red color for the close button */
+ }
+
+
+
+ //users list
+ /* app/assets/stylesheets/application.css */
+
+ .clickable-row {
+   cursor: pointer;
+ }
+
+ .clickable-row:hover {
+   background-color: #f5f5f5; /* or any other color you prefer */
+ }
+ //
+
+ .d-flex {
+   display: flex;
+   align-items: center; /* Align items vertically in the center */
+ }
+
+ .client-container {
+   background-color: #f8f9fa; /* Light background for better contrast */
+   border: 1px solid #dee2e6; /* Subtle border to define the container */
+   border-radius: 5px; /* Rounded corners for a softer look */
+   padding: 5px 10px; /* Spacing inside the container */
+   display: flex;
+   align-items: center; /* Center the content vertically */
+ }
+
+ .client-container span {
+   margin-right: 5px; /* Space between "Client:" and the client name */
+ }
+
+ .client-container strong {
+   font-weight: 600; /* Make the client name bold */
+ }
+ .project-details {
+   background-color: #f8f9fa; /* Light gray background */
+   border-radius: 8px;
+   padding: 20px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+ }
+
+ .client-container {
+   display: inline-block;
+   background-color: #e9ecef;
+   padding: 5px 10px;
+   border-radius: 4px;
+ }
+
+ .project-details h1 {
+   font-size: 2rem;
+   color: #343a40; /* Dark gray */
+ }
+
+ .project-details p {
+   font-size: 1.125rem;
+   color: #6c757d; /* Medium gray */
+ }
+
+ .project-details .btn-group .btn-primary {
+   background-color: #007bff;
+   border-color: #007bff;
+ }
+
+ .project-details .btn-group .dropdown-menu {
+   max-height: 200px;
+   overflow-y: auto;
+ }
+
+ .client-name {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+   max-width: 100px; /* Adjust the max-width as needed */
+ }
+ .card-smoke-white {
+   background-color: #f5f5f5; /* Smoke white color */
+ }
+//flash notices
+ .alert-info {
+   background-color: #d9edf7;
+   color: #31708f;
+ }
+
+ .alert-success {
+   background-color: #dff0d8;
+   color: #3c763d;
+ }
+
+ .alert-danger {
+   background-color: #f2dede;
+   color: #a94442;
+ }
+
+ .alert-warning {
+   background-color: #fcf8e3;
+   color: #8a6d3b;
+ }
