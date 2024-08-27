@@ -3,6 +3,15 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
   # config/routes.rb
+  resources :tasks
+  resources :tasks do
+    member do
+      post :active
+    end
+  end
+  resources :projects do
+    get 'users', to: 'projects#users'
+  end
 
   resources :profiles, only: [ :show, :edit, :update ]
 
@@ -10,8 +19,15 @@ Rails.application.routes.draw do
 
   resources :projects do
     member do
+      get :assigned_users
+    end
+  end
+
+  resources :projects do
+    member do
       post :archive
       post :activate  # Added this line for the activate action
+
     end
   end
 

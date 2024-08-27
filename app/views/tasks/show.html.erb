@@ -1,0 +1,21 @@
+<div class="container mt-4">
+  <div class="card border-secondary shadow-sm">
+    <div class="card-header bg-secondary text-white">
+      <h4 class="card-title mb-0"><%= @task.title %></h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Description:</strong> <%= @task.description %></p>
+      <p><strong>Time Spent:</strong> <%= @task.time_spent || 0 %> hours</p>
+      <p><strong>Deadline:</strong> <%= @task.deadline.present? ? @task.deadline.strftime("%B %d, %Y %H:%M") : 'Not specified' %></p>
+      <p><strong>Started At:</strong> <%= @task.started_at.present? ? @task.started_at.strftime("%B %d, %Y %H:%M") : 'Not specified' %></p>
+      <p><strong>End Time:</strong> <%= @task.end_time.present? ? @task.end_time.strftime("%B %d, %Y %H:%M") : 'Not specified' %></p>
+      <p><strong>Task Type:</strong> <%= @task.task_type.present? ? @task.task_type.capitalize : 'Not specified' %></p>
+      <p><strong>Project:</strong> <%= @task.project.name %></p>
+      <p><strong>User:</strong> <%= @task.user.name if @task.user %></p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-secondary btn-sm' %>
+      <%= link_to 'Back', tasks_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  time_spent: 1
+  deadline: 2024-08-22 15:37:47
+  started_at: 2024-08-22 15:37:47
+  updated_at: 2024-08-22 15:37:47
+  task_type: MyString
+  project: one
+  user: one
+
+two:
+  title: MyString
+  description: MyText
+  time_spent: 1
+  deadline: 2024-08-22 15:37:47
+  started_at: 2024-08-22 15:37:47
+  updated_at: 2024-08-22 15:37:47
+  task_type: MyString
+  project: two
+  user: two

@@ -28,6 +28,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="font-awesome" level="application" />
+    <orderEntry type="library" name="bootstrap-datetimepicker" level="application" />
+    <orderEntry type="library" name="moment.js" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actioncable (v7.2.0, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailbox (v7.2.0, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailer (v7.2.0, asdf: 3.3.3) [gem]" level="application" />
@@ -48,6 +52,7 @@
     <orderEntry type="library" scope="PROVIDED" name="bindex (v0.8.1, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bootsnap (v1.18.4, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bootstrap (v5.2.3, asdf: 3.3.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bootstrap-datetimepicker-rails (v0.0.11, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="brakeman (v6.1.2, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.3.0, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.5.16, asdf: 3.3.3) [gem]" level="application" />
@@ -142,6 +147,8 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, asdf: 3.3.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.6.17, asdf: 3.3.3) [gem]" level="application" />
+    <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="jquery-3.7.1" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />

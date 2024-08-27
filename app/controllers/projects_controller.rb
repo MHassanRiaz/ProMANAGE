@@ -1,9 +1,19 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :archive, :activate]
-  before_action :authorize_user!, only: [:edit, :update, :archive]
-  before_action :authorize_admin!, only: [:new, :create, :archive]
+  before_action :set_project, only: [ :show, :edit, :update, :archive, :activate ]
+  before_action :authorize_user!, only: [ :edit, :update, :archive ]
+  before_action :authorize_admin!, only: [ :new, :create, :archive ]
 
+  def users
+    project = Project.find(params[:id])
+    render json: project.users
+  end
+
+  def assigned_users
+    project = Project.find(params[:id])
+    users = project.users
+    render json: users
+  end
   def index
     if params[:tab] == "archived"
       @projects = Project.where(archived: true)

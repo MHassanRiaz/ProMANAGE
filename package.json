@@ -10,5 +10,9 @@
     "type": "git",
     "url": "https://github.com/MHassanRiaz/ProMANAGE.git"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "bootstrap-datetimepicker": "^0.0.7",
+    "jquery": "^3.7.1"
+  }
 }

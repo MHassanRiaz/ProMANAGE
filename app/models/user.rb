@@ -1,5 +1,6 @@
 
 class User < ApplicationRecord
+  has_many :tasks, dependent: :destroy
   has_many :projects, dependent: :destroy
   has_and_belongs_to_many :projects
   before_create :set_default_role
