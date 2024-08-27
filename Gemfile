@@ -7,7 +7,7 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
 gem "devise", "~> 4.9.4"
-gem "bootstrap", "~> 5.2.0"
+gem "bootstrap", "~> 5.3.3"
 gem "sassc-rails"
 gem "switch_user"
 gem "cancancan"
