@@ -87,7 +87,7 @@ GEM
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
     bootstrap-datetimepicker-rails (0.0.11)
-    brakeman (6.1.2)
+    brakeman (6.2.1)
       racc
     builder (3.3.0)
     cancancan (3.6.1)
