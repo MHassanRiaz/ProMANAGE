@@ -4,11 +4,6 @@ class ProjectsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update, :archive ]
   before_action :authorize_admin!, only: [ :new, :create, :archive ]
 
-  def users
-    project = Project.find(params[:id])
-    render json: project.users
-  end
-
   def assigned_users
     project = Project.find(params[:id])
     users = project.users

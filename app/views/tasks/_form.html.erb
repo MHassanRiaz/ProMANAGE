@@ -1,107 +1,105 @@
-<!-- app/views/tasks/_form.html.erb -->
-<div class="container py-3">
-  <div class="border rounded shadow-sm p-4 bg-white">
-    <%= form_with(model: @task, local: true, class: "needs-validation", novalidate: true) do |form| %>
-      <h1 class="mb-4 text-center"><%= @task.new_record? ? "New Task" : "Edit Task" %></h1>
-      <div class="row g-3">
-        <div class="col-md-3">
-          <%= form.label :title, class: "form-label fw-bold" %>
-          <%= form.text_field :title, class: "form-control shadow-sm", required: true, placeholder: "Add the title here" %>
-          <div class="invalid-feedback">
-            Please enter the task title.
-          </div>
+<div class="container py-3 custom-container">
+  <%= form_with(model: @task, local: true, class: "needs-validation", novalidate: true) do |form| %>
+    <h1 class="mb-4 text-center"><%= @task.new_record? ? "New Task" : "Edit Task" %></h1>
+    <hr>
+    <div class="row g-3">
+      <div class="col-md-3">
+        <%= form.label :title, class: "form-label fw-bold" %>
+        <%= form.text_field :title, class: "form-control", required: true, placeholder: "Add the title here" %>
+        <div class="invalid-feedback">
+          Please enter the task title.
         </div>
+      </div>
 
-        <div class="col-md-3">
-          <%= form.label :task_type, "Task Type", class: "form-label fw-bold" %>
-          <%= form.select :task_type, Task.task_types.keys, { include_blank: "Select Task Type" }, class: "form-select shadow-sm", required: true %>
-          <div class="invalid-feedback">
-            Please select a task type.
-          </div>
+      <div class="col-md-3">
+        <%= form.label :task_type, "Task Type", class: "form-label fw-bold" %>
+        <%= form.select :task_type, Task.task_types.keys, { include_blank: "Select Task Type" }, class: "form-select", required: true %>
+        <div class="invalid-feedback">
+          Please select a task type.
         </div>
+      </div>
 
-        <div class="col-md-3">
-          <%= form.label :project_id, "Select Project", class: "form-label fw-bold" %>
-          <%= form.collection_select :project_id, @active_projects, :id, :name, { prompt: "Choose a project" }, class: "form-select shadow-sm", id: "project_select", required: true %>
-          <div class="invalid-feedback">
-            Please select a project.
-          </div>
+      <div class="col-md-3">
+        <%= form.label :project_id, "Select Project", class: "form-label fw-bold" %>
+        <%= form.collection_select :project_id, @active_projects, :id, :name, include_blank: true, class: "form-select", required: true %>
+        <div class="invalid-feedback">
+          Please select a project.
         </div>
+      </div>
 
-        <div class="col-md-3">
-          <% if current_user.admin? %>
-            <div>
-              <%= form.label :assigned_user_id, "Assign User", class: "form-label fw-bold" %>
-              <%= form.collection_select :assigned_user_id, @assigned_users, :id, :name, { prompt: "Select User" }, class: "form-select shadow-sm", required: true %>
-              <div class="invalid-feedback">
-                Please select a user to assign.
-              </div>
+      <div class="col-md-3">
+        <% if current_user.admin? %>
+          <div>
+            <%= form.label :assigned_user_id, "Assign User", class: "form-label fw-bold" %>
+            <%= form.collection_select :assigned_user_id, @assigned_users, :id, :name, { prompt: "Select User" }, class: "form-select", required: true %>
+            <div class="invalid-feedback">
+              Please select a user to assign.
             </div>
-          <% else %>
-            <p>You are not authorized to assign users.</p>
-          <% end %>
+          </div>
+        <% else %>
+          <p>You are not authorized to assign users.</p>
+        <% end %>
+      </div>
+
+      <div class="col-md-12">
+        <%= form.label :description, class: "form-label fw-bold" %>
+        <%= form.text_area :description, class: "form-control", rows: 5, required: true, placeholder: "Add the description of task here" %>
+        <div class="invalid-feedback">
+          Please enter the task description.
         </div>
+      </div>
+    </div>
 
-
-        <div class="col-md-12">
-          <%= form.label :description, class: "form-label fw-bold" %>
-          <%= form.text_area :description, class: "form-control shadow-sm", rows: 5, required: true, placeholder: "Add the description of task here" %>
+    <div class="row g-2 align-items-center mt-3">
+      <!-- Time Spent -->
+      <div class="col-md-3">
+        <%= form.label :time_spent, class: "form-label fw-bold mb-0" %>
+        <div class="input-group">
+          <%= form.number_field :time_spent, class: "form-control", disabled: true %>
+          <span class="input-group-text">hrs</span>
           <div class="invalid-feedback">
-            Please enter the task description.
+            Please enter the time spent.
           </div>
         </div>
       </div>
 
-      <div class="row g-2 align-items-center mt-3">
-        <!-- Time Spent -->
-        <div class="col-md-3">
-          <%= form.label :time_spent, class: "form-label fw-bold mb-0" %>
-          <div class="input-group">
-            <%= form.number_field :time_spent, class: "form-control shadow-sm", disabled: true %>
-            <span class="input-group-text">hrs</span>
-            <div class="invalid-feedback">
-              Please enter the time spent.
-            </div>
-          </div>
-        </div>
-
-        <!-- Deadline Date and Time -->
-        <div class="col-md-3">
-          <%= form.label :deadline, class: "form-label fw-bold mb-0" %>
-          <div class="input-group">
-            <%= form.datetime_local_field :deadline, id: "deadline_picker", class: "form-control shadow-sm", required: true %>
-            <div class="invalid-feedback">
-              Please select a deadline.
-            </div>
-          </div>
-        </div>
-
-        <!-- Start Time -->
-        <div class="col-md-3">
-          <%= form.label :started_at, class: "form-label fw-bold mb-0" %>
-          <div class="input-group">
-            <%= form.datetime_local_field :started_at, id: "start_time_picker", class: "form-control shadow-sm", required: true %>
-            <div class="invalid-feedback">
-              Please select a start time.
-            </div>
-          </div>
-        </div>
-
-        <!-- End Time -->
-        <div class="col-md-3 mt-2">
-          <%= form.label :end_time, class: "form-label fw-bold mb-0" %>
-          <div class="input-group">
-            <%= form.datetime_local_field :end_time, id: "end_time_picker", class: "form-control shadow-sm", required: true %>
-            <div class="invalid-feedback">
-              Please select an end time.
-            </div>
+      <!-- Deadline Date and Time -->
+      <div class="col-md-3">
+        <%= form.label :deadline, class: "form-label fw-bold mb-0" %>
+        <div class="input-group">
+          <%= form.datetime_local_field :deadline, id: "deadline_picker", class: "form-control", required: true %>
+          <div class="invalid-feedback">
+            Please select a deadline.
           </div>
         </div>
       </div>
 
-      <div class="d-grid gap-2 mt-4">
-        <%= form.submit @task.new_record? ? "Create Task" : "Update Task", class: "btn btn-primary btn-md" %>
+      <!-- Start Time -->
+      <div class="col-md-3">
+        <%= form.label :started_at, class: "form-label fw-bold mb-0" %>
+        <div class="input-group">
+          <%= form.datetime_local_field :started_at, id: "start_time_picker", class: "form-control", required: true %>
+          <div class="invalid-feedback">
+            Please select a start time.
+          </div>
+        </div>
       </div>
-    <% end %>
-  </div>
+
+      <!-- End Time -->
+      <div class="col-md-3 mt-2">
+        <%= form.label :end_time, class: "form-label fw-bold mb-0" %>
+        <div class="input-group">
+          <%= form.datetime_local_field :end_time, id: "end_time_picker", class: "form-control", required: true %>
+          <div class="invalid-feedback">
+            Please select an end time.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="d-grid gap-2 mt-4">
+      <%= form.submit @task.new_record? ? "Create Task" : "Update Task", class: "btn btn-primary btn-md" %>
+    </div>
+  <% end %>
 </div>

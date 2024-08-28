@@ -1,10 +1,17 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
-import { Application } from "@hotwired/stimulus"
-import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
+import "controllers"
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap-sprockets
+//= require bootstrap
+//= require_tree .
+// app/javascript/packs/application.js
 
-const application = Application.start()
-const context = require.context("./controllers", true, /\.js$/)
-application.load(definitionsFromContext(context))
-
-
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.clickable-row').forEach(row => {
+        row.addEventListener('click', () => {
+            window.location.href = row.getAttribute('data-href');
+        });
+    });
+});

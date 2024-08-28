@@ -7,10 +7,8 @@ Rails.application.routes.draw do
   resources :tasks do
     member do
       post :active
+
     end
-  end
-  resources :projects do
-    get 'users', to: 'projects#users'
   end
 
   resources :profiles, only: [ :show, :edit, :update ]
@@ -27,7 +25,6 @@ Rails.application.routes.draw do
     member do
       post :archive
       post :activate  # Added this line for the activate action
-
     end
   end
 
