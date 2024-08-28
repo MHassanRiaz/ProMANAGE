@@ -1,0 +1,78 @@
+<%= form_with(model: @task, local: true, html: { class: 'needs-validation', novalidate: true }) do |form| %>
+  <% if @task.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading"><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h4>
+      <ul>
+        <% @task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card custom-card mb-4">
+    <div class="card-header custom-card-header">
+      <h4 class="mb-0">Task Details</h4>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <%= form.label :title, class: 'form-label fw-bold' %>
+        <%= form.text_field :title, class: 'form-control', placeholder: 'Add the title here', required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :description, class: 'form-label fw-bold' %>
+        <%= form.text_area :description, class: 'form-control', rows: 4, placeholder: 'Add the description of task here', required: true %>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :deadline, class: 'form-label fw-bold' %>
+            <%= form.datetime_select :deadline, class: 'form-control', required: true %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :started_at, class: 'form-label fw-bold' %>
+            <%= form.datetime_select :started_at, class: 'form-control', required: true %>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :ended_at, class: 'form-label fw-bold' %>
+        <%= form.datetime_select :ended_at, class: 'form-control', required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :task_type, class: 'form-label fw-bold' %>
+        <%= form.select :task_type, options_for_select(['Features', 'Bugs', 'Chore', 'Release']), { prompt: 'Select Task Type' }, class: 'form-select', required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :project_id, class: 'form-label fw-bold' %>
+        <%= form.collection_select :project_id, Project.where(archived: false), :id, :name, { prompt: 'Select Project' }, class: 'form-select', required: true %>
+      </div>
+
+      <% if current_user.admin? %>
+        <div class="mb-3">
+          <%= form.label :user_id, class: 'form-label fw-bold' %>
+          <%= form.collection_select :user_id, User.all, :id, :name, { prompt: 'Select User' }, class: 'form-select', required: true %>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= form.label :time_spent, class: 'form-label fw-bold' %>
+        <div class="input-group">
+          <%= form.number_field :time_spent, class: 'form-control', disabled: true %>
+          <span class="input-group-text">hrs</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer custom-card-footer d-grid gap-2">
+      <%= form.submit 'Save Task', class: 'btn btn-primary btn-lg' %>
+    </div>
+  </div>
+<% end %>

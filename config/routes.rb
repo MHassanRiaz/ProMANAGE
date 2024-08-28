@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
   # config/routes.rb
+  resources :tasks
 
   resources :profiles, only: [ :show, :edit, :update ]
 
