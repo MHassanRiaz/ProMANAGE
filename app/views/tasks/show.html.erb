@@ -1,41 +1,74 @@
 <!-- app/views/tasks/show.html.erb -->
+<br>
 <div class="container mt-4">
-  <h1 class="mb-4">Task Details</h1>
+  <div class="card shadow-sm border rounded">
+    <div class="card-body p-4 bg-light">
+      <!-- Title Center Alignment -->
+      <div class="text-center mb-4">
+        <h1><%= @task.title %></h1>
+      </div>
 
-  <div class="card">
-    <div class="card-body">
-      <dl class="row">
-        <dt class="col-sm-3">Title:</dt>
-        <dd class="col-sm-9"><%= @task.title %></dd>
+      <h5>Description:</h5>
+      <p style="text-align: justify;"><%= @task.description %></p>
 
-        <dt class="col-sm-3">Description:</dt>
-        <dd class="col-sm-9"><%= @task.description %></dd>
+      <!-- Time Spent Section -->
+      <div class="mb-4">
+        <h5>Time Spent:</h5>
+        <p><%= @task.time_spent %> <span class="text-muted">hours</span></p>
+      </div>
 
-        <dt class="col-sm-3">Time Spent:</dt>
-        <dd class="col-sm-9"><%= @task.time_spent %> <span class="text-muted">hours</span></dd>
+      <!-- Deadline Section -->
+      <% if @task.deadline.present? %>
+        <div class="mb-4">
+          <h5>Deadline:</h5>
+          <p><%= @task.deadline.strftime('%Y-%m-%d %H:%M') %></p>
+        </div>
+      <% end %>
 
-        <dt class="col-sm-3">Deadline:</dt>
-        <dd class="col-sm-9"><%= @task.deadline.strftime('%Y-%m-%d %H:%M') %></dd>
+      <!-- Started At Section -->
+      <% if @task.started_at.present? %>
+        <div class="mb-4">
+          <h5>Started At:</h5>
+          <p><%= @task.started_at.strftime('%Y-%m-%d %H:%M') %></p>
+        </div>
+      <% end %>
 
-        <dt class="col-sm-3">Started At:</dt>
-        <dd class="col-sm-9"><%= @task.started_at.strftime('%Y-%m-%d %H:%M') %></dd>
+      <!-- Ended At Section -->
+      <% if @task.ended_at.present? %>
+        <div class="mb-4">
+          <h5>Ended At:</h5>
+          <p><%= @task.ended_at.strftime('%Y-%m-%d %H:%M') %></p>
+        </div>
+      <% end %>
 
-        <dt class="col-sm-3">Ended At:</dt>
-        <dd class="col-sm-9"><%= @task.ended_at.strftime('%Y-%m-%d %H:%M') %></dd>
+      <!-- Task Type Section -->
+      <div class="mb-4">
+        <h5>Task Type:</h5>
+        <p><%= @task.task_type %></p>
+      </div>
 
-        <dt class="col-sm-3">Task Type:</dt>
-        <dd class="col-sm-9"><%= @task.task_type %></dd>
+      <!-- Project Section -->
+      <div class="mb-4">
+        <h5>Project:</h5>
+        <p><%= @task.project.name %></p>
+      </div>
 
-        <dt class="col-sm-3">Project:</dt>
-        <dd class="col-sm-9"><%= @task.project.name %></dd>
+      <!-- Assigned User Section -->
+      <% if @task.user.present? %>
+        <div class="mb-4">
+          <h5>Assigned User:</h5>
+          <p><%= @task.user.name %></p>
+        </div>
+      <% end %>
 
-        <% if @task.user.present? %>
-          <dt class="col-sm-3">Assigned User:</dt>
-          <dd class="col-sm-9"><%= @task.user.name %></dd>
+      <!-- Buttons -->
+      <div class="d-flex justify-content-between">
+        <% if current_user.admin? %>
+          <%= link_to 'Edit', edit_task_path(@task), class: "btn btn-warning me-2" %>
         <% end %>
-      </dl>
-
-      <%= link_to 'Back', tasks_path, class: 'btn btn-secondary' %>
+        <%= link_to 'Back', tasks_path, class: "btn btn-secondary" %>
+      </div>
     </div>
   </div>
 </div>
+<br>

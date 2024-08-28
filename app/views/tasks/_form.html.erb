@@ -1,6 +1,6 @@
 <%= form_with(model: @task, local: true, html: { class: 'needs-validation', novalidate: true }) do |form| %>
   <% if @task.errors.any? %>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger shadow-sm" role="alert">
       <h4 class="alert-heading"><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h4>
       <ul>
         <% @task.errors.full_messages.each do |message| %>
@@ -10,69 +10,67 @@
     </div>
   <% end %>
 
-  <div class="card custom-card mb-4">
-    <div class="card-header custom-card-header">
-      <h4 class="mb-0">Task Details</h4>
-    </div>
+  <div class="card custom-card mb-4 shadow-lg">
+    <h1 class="mb-0 text-center"><%= @task.new_record? ? 'New Task' : 'Edit Task' %></h1>
     <div class="card-body">
-      <div class="mb-3">
-        <%= form.label :title, class: 'form-label fw-bold' %>
-        <%= form.text_field :title, class: 'form-control', placeholder: 'Add the title here', required: true %>
+      <!-- First Row: Title, Project, Assign User, Task Type -->
+      <div class="d-flex flex-wrap mb-3">
+        <div class="flex-fill me-3">
+          <%= form.label :title, class: 'form-label fw-bold' %>
+          <%= form.text_field :title, class: 'form-control shadow-sm', placeholder: 'Add the title here', required: true %>
+        </div>
+
+        <div class="flex-fill me-3">
+          <%= form.label :project_id, class: 'form-label fw-bold' %>
+          <%= form.collection_select :project_id, Project.where(archived: false), :id, :name, { prompt: 'Select Project' }, class: 'form-select shadow-sm', required: true %>
+        </div>
+
+        <% if current_user.admin? %>
+          <div class="flex-fill me-3">
+            <%= form.label :user_id, class: 'form-label fw-bold' %>
+            <%= form.collection_select :user_id, User.all, :id, :name, { prompt: 'Select User' }, class: 'form-select shadow-sm', required: true %>
+          </div>
+        <% end %>
+
+        <div class="flex-fill">
+          <%= form.label :task_type, "Task Type", class: 'form-label fw-bold' %>
+          <%= form.select :task_type, options_for_select(['Feature', 'Bug', 'Chore', 'Release'], @task.task_type), { prompt: 'Select Task Type' }, class: 'form-select shadow-sm', required: true %>
+        </div>
       </div>
 
+      <!-- Second Row: Description -->
       <div class="mb-3">
         <%= form.label :description, class: 'form-label fw-bold' %>
-        <%= form.text_area :description, class: 'form-control', rows: 4, placeholder: 'Add the description of task here', required: true %>
+        <%= form.text_area :description, class: 'form-control shadow-sm', rows: 4, placeholder: 'Add the description of task here', required: true %>
       </div>
 
+      <!-- Third Row: Deadline, Started At, Ended At -->
       <div class="row g-3">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="mb-3">
             <%= form.label :deadline, class: 'form-label fw-bold' %>
-            <%= form.datetime_select :deadline, class: 'form-control', required: true %>
+            <%= form.text_field :deadline, type: 'datetime-local', class: 'form-control shadow-sm', value: @task.deadline&.strftime('%Y-%m-%dT%H:%M'), required: true %>
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="mb-3">
             <%= form.label :started_at, class: 'form-label fw-bold' %>
-            <%= form.datetime_select :started_at, class: 'form-control', required: true %>
+            <%= form.text_field :started_at, type: 'datetime-local', class: 'form-control shadow-sm', value: @task.started_at&.strftime('%Y-%m-%dT%H:%M'), required: true %>
           </div>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <%= form.label :ended_at, class: 'form-label fw-bold' %>
-        <%= form.datetime_select :ended_at, class: 'form-control', required: true %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.label :task_type, class: 'form-label fw-bold' %>
-        <%= form.select :task_type, options_for_select(['Features', 'Bugs', 'Chore', 'Release']), { prompt: 'Select Task Type' }, class: 'form-select', required: true %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.label :project_id, class: 'form-label fw-bold' %>
-        <%= form.collection_select :project_id, Project.where(archived: false), :id, :name, { prompt: 'Select Project' }, class: 'form-select', required: true %>
-      </div>
-
-      <% if current_user.admin? %>
-        <div class="mb-3">
-          <%= form.label :user_id, class: 'form-label fw-bold' %>
-          <%= form.collection_select :user_id, User.all, :id, :name, { prompt: 'Select User' }, class: 'form-select', required: true %>
-        </div>
-      <% end %>
-
-      <div class="mb-3">
-        <%= form.label :time_spent, class: 'form-label fw-bold' %>
-        <div class="input-group">
-          <%= form.number_field :time_spent, class: 'form-control', disabled: true %>
-          <span class="input-group-text">hrs</span>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <%= form.label :ended_at, class: 'form-label fw-bold' %>
+            <%= form.text_field :ended_at, type: 'datetime-local', class: 'form-control shadow-sm', value: @task.ended_at&.strftime('%Y-%m-%dT%H:%M'), required: true %>
+          </div>
         </div>
       </div>
     </div>
-    <div class="card-footer custom-card-footer d-grid gap-2">
-      <%= form.submit 'Save Task', class: 'btn btn-primary btn-lg' %>
+
+    <div class="d-flex justify-content-center mb-3">
+      <%= form.submit @task.new_record? ? 'Create Task' : 'Update Task', class: 'btn btn-primary btn-lg shadow-sm' %>
     </div>
   </div>
 <% end %>
