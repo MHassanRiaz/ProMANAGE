@@ -8,6 +8,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @task = Task.find(params[:id])
   end
 
   def new
@@ -33,6 +34,7 @@ class TasksController < ApplicationController
   def update
     # Only allow updating if the current user is an admin or the owner of the task
     authorize_user!
+    @task = Task.find(params[:id])
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
@@ -54,7 +56,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :time_spent, :deadline, :started_at, :ended_at, :task_type, :project_id, :user_id)
+    params.require(:task).permit(:title, :description, :time_spent, :deadline, :started_at, :ended_at, :task_type, :project_id, :user_id, :rate_per_hour)
   end
 
   def authorize_admin!

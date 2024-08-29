@@ -67,14 +67,14 @@
             <%= form.text_field :ended_at, type: 'datetime-local', class: 'form-control shadow-sm', value: @task.ended_at&.strftime('%Y-%m-%dT%H:%M'), required: true %>
           </div>
         </div>
+
+
+      <!-- Rate Per Hour (Visible only to admins) -->
       </div>
       <div class="d-flex mt-4 justify-content-end gap-3">
         <%= form.submit @task.new_record? ? 'Create Task' : 'Update Task', class: 'btn btn-primary btn-md shadow-md' %>
         <%= link_to 'Back', tasks_path, class: "btn btn-secondary btn-md shadow-md" %>
       </div>
     </div>
-
-    <!-- Button Alignment -->
-
   </div>
 <% end %>
