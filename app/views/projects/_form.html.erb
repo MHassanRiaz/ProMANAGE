@@ -14,14 +14,14 @@
     </div>
   <% end %>
 
-  <%= form_with(model: project, local: true) do |form| %>
+  <%= form_with(model: @project, local: true) do |form| %>
     <fieldset>
       <!-- Displaying Errors -->
-      <% if project.errors.any? %>
+      <% if @project.errors.any? %>
         <div class="alert alert-danger">
           <h4 class="alert-heading">There were some errors:</h4>
           <ul>
-            <% project.errors.full_messages.each do |message| %>
+            <% @project.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
           </ul>
@@ -55,19 +55,32 @@
           </div>
         </div>
 
-        <!-- Technology Stack -->
-        <div class="col-md-6">
-          <div class="mb-3">
-            <%= form.label :technology_stack, "Technology Stack", class: "form-label" %>
-            <div id="tech-stack-container" class="d-flex flex-wrap mb-2"></div>
-            <input type="text" id="tech-stack-input" class="form-control mt-2" placeholder="Enter a technology and press comma">
-            <%= form.hidden_field :technology_stack, id: "technology_stack_hidden", value: project.technology_stack %>
+        <% if current_user.admin? %>
+          <div class="col-md-6">
+            <!-- Rate Per Hour -->
+            <div class="mb-4 input-group">
+              <%= form.label :rate_per_hour, "Rate per Hour", class: "form-label" %>
+              <div class="input-group">
+                <%= form.number_field :rate_per_hour, class: "form-control no-spinner", placeholder: "Enter rate per hour", min: 0 %>
+                <span class="input-group-text">$</span>
+              </div>
+            </div>
           </div>
+        <% end %>
+      </div>
+
+      <!-- Technology Stack -->
+      <div class="col-md-12 mb-4">
+        <div class="mb-3">
+          <%= form.label :technology_stack, "Technology Stack", class: "form-label" %>
+          <div id="tech-stack-container" class="d-flex flex-wrap mb-2"></div>
+          <input type="text" id="tech-stack-input" class="form-control mt-2" placeholder="Enter a technology and press comma">
+          <%= form.hidden_field :technology_stack, id: "technology_stack_hidden", value: @project.technology_stack %>
         </div>
       </div>
 
+      <!-- Project Description -->
       <div class="mb-4">
-        <!-- Project Description -->
         <div class="mb-3">
           <%= form.label :description, "Project Description", class: "form-label" %>
           <%= form.text_area :description, class: "form-control", rows: 5, placeholder: "Enter project description here" %>
@@ -110,11 +123,9 @@
             if (Array.from(techStackContainer.children).some(badge => badge.firstChild.textContent === tech)) {
                 return;
             }
-
             const badge = document.createElement("span");
             badge.className = "badge bg-secondary me-2 mb-2";
             badge.textContent = tech;
-
             const removeBtn = document.createElement("button");
             removeBtn.type = "button";
             removeBtn.className = "btn-close ms-2";
@@ -123,7 +134,6 @@
                 badge.remove();
                 updateHiddenInput();
             };
-
             badge.appendChild(removeBtn);
             techStackContainer.appendChild(badge);
         }
@@ -137,3 +147,17 @@
         }
     });
 </script>
+<style>
+    /* Hide the arrows in Webkit browsers */
+    input[type="number"].no-spinner::-webkit-inner-spin-button,
+    input[type="number"].no-spinner::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Hide the arrows in Firefox */
+    input[type="number"].no-spinner {
+        -moz-appearance: textfield;
+    }
+
+</style>

@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :client_name, :description, :technology_stack, :url)
+    params.require(:project).permit(:name, :client_name, :description, :technology_stack, :url,  :rate_per_hour)
   end
 
   def authorize_user!
