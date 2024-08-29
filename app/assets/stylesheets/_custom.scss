@@ -151,18 +151,10 @@
  }
  //nav
  .navbar {
-   font-family: 'Arial', sans-serif;
    font-size: 1rem;
-
-   .navbar-brand {
-     font-weight: bold;
-     font-size: 1.25rem;
-   }
-
    .nav-link {
      color: #333;
      transition: color 0.3s ease;
-     font-weight: bold;
 
      &:hover {
        color: #0056b3;
@@ -521,3 +513,4 @@
    padding: 0.5rem 1rem;
    font-size: 1rem;
  }
+
