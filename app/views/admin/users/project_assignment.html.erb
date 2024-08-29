@@ -1,27 +1,26 @@
 <div class="container my-4">
   <h1 class="mb-4">Project Assignment</h1>
 
-  <table class="table table-bordered table-hover">
+  <table class="table table-bordered ">
     <thead class="table-light">
     <tr>
-      <th scope="col">User</th>
-      <th scope="col">Assigned Projects</th>
-      <th scope="col">Assign New Project</th>
+      <th scope="col" class="col-md-2">User</th>
+      <th scope="col" class="col-md-5">Assigned Projects</th>
+      <th scope="col" class="col-md-5">Assign New Project</th>
     </tr>
     </thead>
     <tbody>
     <% @users.each do |user| %>
       <tr>
-
         <td><%= user.name %></td>
         <td>
           <ul class="list-unstyled">
             <% user.projects.each do |project| %>
               <li class="d-flex justify-content-between align-items-center">
-                <%= project.name %><hr>
+                <%= project.name %>
+                <hr>
                 <%= form_with url: remove_project_admin_user_path(id: user.id, project_id: project.id), method: :post, data: { confirm: 'Are you sure?' }, class: "d-inline" do %>
-                  <%= submit_tag 'Remove Project', class: "btn btn-danger btn-sm" %>
-                <% end %>
+                  <%= submit_tag 'De-Assign', class: "btn btn-link text-danger text-decoration-none p-0" %>                <% end %>
               </li>
             <% end %>
           </ul>
@@ -30,7 +29,7 @@
           <%= form_with url: assign_project_admin_user_path(user), method: :post, local: true, class: "d-flex" do |form| %>
             <%= form.hidden_field :user_id, value: user.id %>
             <%= form.collection_select :project_id, @available_projects_for_user[user.id], :id, :name, { prompt: "Select a project" }, { class: "form-select me-1" } %>
-            <%= form.submit "Assign", class: "btn btn-primary btn_sm" %>
+            <%= form.submit "Assign", class: "btn btn-primary btn-md" %>
           <% end %>
         </td>
       </tr>

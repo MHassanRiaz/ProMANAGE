@@ -27,7 +27,7 @@
           <tbody>
           <% @tasks.each do |task| %>
             <tr class="clickable-row" data-href="<%= task_path(task) %>">
-              <td class="text-center"><%= task.title %></td>
+              <td class="text-center"><%= task.title.truncate(20) %></td>
               <td class="text-center"><%= task.time_spent %> <span class="text-muted">hours</span></td>
               <td class="text-center"><%= task.task_type %></td>
               <td class="text-center"><%= task.project.name %></td>

@@ -15,3 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+jQuery(document).ready(function($) {
+    import $ from 'jquery';
+    window.$ = $; // Make jQuery available globally
+    window.jQuery = $; // For compatibility with plugins that expect jQuery to be globally available
+    import 'bootstrap';
+
+    // Your code that uses $ (which is an alias for jQuery)
+});

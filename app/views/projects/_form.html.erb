@@ -1,4 +1,6 @@
-<div>
+<div class="project-details p-4 bg-light border rounded">
+  <h2 class="text-center"><%= action_name == 'new' ? 'New Project' : 'Edit Project' %></h2>
+
   <!-- Flash Notices -->
   <% if flash[:notice] %>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -26,36 +28,112 @@
         </div>
       <% end %>
 
-      <div class="mb-3">
-        <%= form.label :name, class: "form-label" %>
-        <%= form.text_field :name, class: "form-control" %>
+      <div class="row mb-4">
+        <!-- Project Name -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :name, "Project Name", class: "form-label" %>
+            <%= form.text_field :name, class: "form-control", placeholder: "Enter project name here" %>
+          </div>
+        </div>
+
+        <!-- Client Name -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :client_name, "Client Name", class: "form-label" %>
+            <%= form.text_field :client_name, class: "form-control", placeholder: "Enter client name here" %>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        <%= form.label :client_name, "Client Name", class: "form-label" %>
-        <%= form.text_field :client_name, class: "form-control" %>
+      <div class="row mb-4">
+        <!-- Project URL -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :url, "Project URL", class: "form-label" %>
+            <%= form.text_field :url, class: "form-control", placeholder: "Enter project URL here" %>
+          </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <%= form.label :technology_stack, "Technology Stack", class: "form-label" %>
+            <div id="tech-stack-container" class="d-flex flex-wrap mb-2"></div>
+            <input type="text" id="tech-stack-input" class="form-control mt-2" placeholder="Enter a technology and press comma">
+            <%= form.hidden_field :technology_stack, id: "technology_stack_hidden", value: project.technology_stack %>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        <%= form.label :url, "Project URL", class: "form-label" %>
-        <%= form.text_field :url, class: "form-control" %>
+      <div class="mb-4">
+        <!-- Project Description -->
+        <div class="mb-3">
+          <%= form.label :description, "Project Description", class: "form-label" %>
+          <%= form.text_area :description, class: "form-control", rows: 5, placeholder: "Enter project description here" %>
+        </div>
       </div>
 
-      <div class="mb-3">
-        <%= form.label :technology_stack, "Technology Stack", class: "form-label" %>
-        <div id="tech-stack-container" class="d-flex flex-wrap justify-content-center mb-2"></div>
-        <input type="text" id="tech-stack-input" class="form-control mt-2" placeholder="Enter a technology and press Enter">
-        <label for="tech-stack-input"><%= form.hidden_field :technology_stack, id: "technology_stack_hidden", value: @project.technology_stack %></label>
-      </div>
-
-      <div class="mb-3">
-        <%= form.label :description, class: "form-label" %>
-        <%= form.text_area :description, class: "form-control", rows: 9 %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.submit class: "btn btn-primary" %>
+      <div class="d-flex justify-content-end">
+        <%= form.submit action_name == 'new' ? "Create Project" : "Update Project", class: "btn btn-primary" %>
+        <%= link_to 'Back', root_path, class: 'btn btn-secondary ms-2' %>
       </div>
     </fieldset>
   <% end %>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const techStackInput = document.getElementById("tech-stack-input");
+        const techStackContainer = document.getElementById("tech-stack-container");
+        const techStackHiddenInput = document.getElementById("technology_stack_hidden");
+
+        // Load existing technology stack values into badges
+        const existingTechStack = techStackHiddenInput.value.split(',');
+        existingTechStack.forEach(function(tech) {
+            if (tech.trim() !== "") {
+                addBadge(tech.trim());
+            }
+        });
+
+        techStackInput.addEventListener("keydown", function(event) {
+            if (event.key === "," && techStackInput.value.trim() !== "") {
+                event.preventDefault();
+                addBadge(techStackInput.value.trim());
+                techStackInput.value = "";
+                updateHiddenInput();
+            }
+        });
+
+        function addBadge(tech) {
+            // Check if the technology is already added
+            if (Array.from(techStackContainer.children).some(badge => badge.firstChild.textContent === tech)) {
+                return;
+            }
+
+            const badge = document.createElement("span");
+            badge.className = "badge bg-secondary me-2 mb-2";
+            badge.textContent = tech;
+
+            const removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "btn-close ms-2";
+            removeBtn.ariaLabel = "Close";
+            removeBtn.onclick = function() {
+                badge.remove();
+                updateHiddenInput();
+            };
+
+            badge.appendChild(removeBtn);
+            techStackContainer.appendChild(badge);
+        }
+
+        function updateHiddenInput() {
+            const techs = [];
+            techStackContainer.querySelectorAll(".badge").forEach(function(badge) {
+                techs.push(badge.firstChild.textContent);
+            });
+            techStackHiddenInput.value = techs.join(",");
+        }
+    });
+</script>

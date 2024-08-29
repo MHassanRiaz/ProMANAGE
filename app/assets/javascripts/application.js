@@ -1,5 +1,8 @@
 //= require rails-ujs
 //= require_tree .
+//= require bootstrap-datetimepicker
+//= require_tree .
+
 // app/javascripts/packs/application.js or another JavaScript file
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,50 +14,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const input = document.getElementById('tech-stack-input');
-    const container = document.getElementById('tech-stack-container');
-    const hiddenField = document.getElementById('technology_stack_hidden');
+// Assigned users call
+document.addEventListener("DOMContentLoaded", function() {
+    const projectSelect = document.getElementById("project_select");
 
-    let techStack = hiddenField.value ? hiddenField.value.split(',') : [];
+    if (projectSelect) {
+        projectSelect.addEventListener("change", function() {
+            const projectId = this.value;
 
-    function updateHiddenField() {
-        hiddenField.value = techStack.join(',');
-    }
+            if (projectId) {
+                fetch(`/projects/${projectId}/assigned_users`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const userSelect = document.getElementById("task_assigned_user_id");
+                        userSelect.innerHTML = '<option value="">Select User</option>';
 
-    function createTag(text) {
-        const tag = document.createElement('span');
-        tag.className = 'badge bg-secondary me-2 mb-2';
-        tag.textContent = text;
-
-        const removeIcon = document.createElement('span');
-        removeIcon.className = 'ms-2 text-danger cursor-pointer';
-        removeIcon.textContent = '×';
-        removeIcon.style.cursor = 'pointer';
-
-        removeIcon.addEventListener('click', function() {
-            container.removeChild(tag);
-            techStack = techStack.filter(t => t !== text);
-            updateHiddenField();
-        });
-
-        tag.appendChild(removeIcon);
-        container.appendChild(tag);
-    }
-
-    input.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            const text = input.value.trim();
-            if (text && !techStack.includes(text)) {
-                techStack.push(text);
-                createTag(text);
-                updateHiddenField();
-                input.value = '';
+                        data.forEach(user => {
+                            const option = document.createElement("option");
+                            option.value = user.id;
+                            option.text = user.name;
+                            userSelect.appendChild(option);
+                        });
+                    });
+            } else {
+                // Clear the assigned users dropdown if no project is selected
+                document.getElementById("task_assigned_user_id").innerHTML = '<option value="">Select User</option>';
             }
-        }
-    });
+        });
+    }
+});
 
-    // Initialize tags from hidden field value
-    techStack.forEach(tag => createTag(tag));
+// jQuery and Bootstrap integration
+jQuery(document).ready(function($) {
+    import $ from "jquery";
+    window.$ = $; // Make jQuery available globally
+    window.jQuery = $; // For compatibility with plugins that expect jQuery to be globally available
+    import 'bootstrap';
+
+    // Your code that uses $ (which is an alias for jQuery)
 });

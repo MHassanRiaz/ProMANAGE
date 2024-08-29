@@ -1,4 +1,3 @@
-<!-- app/views/tasks/show.html.erb -->
 <br>
 <div class="container mt-4">
   <div class="card shadow-sm border rounded">
@@ -8,67 +7,69 @@
         <h1><%= @task.title %></h1>
       </div>
 
-      <h5>Description:</h5>
-      <p style="text-align: justify;"><%= @task.description %></p>
+      <!-- First Row: Title, Project, Assign User, Task Type -->
+      <div class="d-flex flex-wrap mb-3">
+        <div class="flex-fill me-3">
+          <label class="form-label fw-bold">Title</label>
+          <input type="text" class="form-control shadow-sm" value="<%= @task.title %>" disabled>
+        </div>
 
-      <!-- Time Spent Section -->
-      <div class="mb-4">
-        <h5>Time Spent:</h5>
-        <p><%= @task.time_spent %> <span class="text-muted">hours</span></p>
+        <div class="flex-fill me-3">
+          <label class="form-label fw-bold">Project</label>
+          <input type="text" class="form-control shadow-sm" value="<%= @task.project.name %>" disabled>
+        </div>
+
+        <% if @task.user.present? %>
+          <div class="flex-fill me-3">
+            <label class="form-label fw-bold">Assigned User</label>
+            <input type="text" class="form-control shadow-sm" value="<%= @task.user.name %>" disabled>
+          </div>
+        <% end %>
+
+        <div class="flex-fill">
+          <label class="form-label fw-bold">Task Type</label>
+          <input type="text" class="form-control shadow-sm" value="<%= @task.task_type %>" disabled>
+        </div>
       </div>
 
-      <!-- Deadline Section -->
-      <% if @task.deadline.present? %>
-        <div class="mb-4">
-          <h5>Deadline:</h5>
-          <p><%= @task.deadline.strftime('%Y-%m-%d %H:%M') %></p>
-        </div>
-      <% end %>
-
-      <!-- Started At Section -->
-      <% if @task.started_at.present? %>
-        <div class="mb-4">
-          <h5>Started At:</h5>
-          <p><%= @task.started_at.strftime('%Y-%m-%d %H:%M') %></p>
-        </div>
-      <% end %>
-
-      <!-- Ended At Section -->
-      <% if @task.ended_at.present? %>
-        <div class="mb-4">
-          <h5>Ended At:</h5>
-          <p><%= @task.ended_at.strftime('%Y-%m-%d %H:%M') %></p>
-        </div>
-      <% end %>
-
-      <!-- Task Type Section -->
-      <div class="mb-4">
-        <h5>Task Type:</h5>
-        <p><%= @task.task_type %></p>
+      <!-- Second Row: Description -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">Description</label>
+        <textarea class="form-control shadow-sm" rows="4" disabled><%= @task.description %></textarea>
       </div>
 
-      <!-- Project Section -->
-      <div class="mb-4">
-        <h5>Project:</h5>
-        <p><%= @task.project.name %></p>
-      </div>
-
-      <!-- Assigned User Section -->
-      <% if @task.user.present? %>
-        <div class="mb-4">
-          <h5>Assigned User:</h5>
-          <p><%= @task.user.name %></p>
+      <!-- Third Row: Deadline, Started At, Ended At -->
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Deadline</label>
+            <input type="datetime-local" class="form-control shadow-sm" value="<%= @task.deadline&.strftime('%Y-%m-%dT%H:%M') %>" disabled>
+          </div>
         </div>
-      <% end %>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Started At</label>
+            <input type="datetime-local" class="form-control shadow-sm" value="<%= @task.started_at&.strftime('%Y-%m-%dT%H:%M') %>" disabled>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Ended At</label>
+            <input type="datetime-local" class="form-control shadow-sm" value="<%= @task.ended_at&.strftime('%Y-%m-%dT%H:%M') %>" disabled>
+          </div>
+        </div>
+      </div>
 
       <!-- Buttons -->
-      <div class="d-flex justify-content-between">
+      <div class="mt-3 d-flex justify-content-end">
         <% if current_user.admin? %>
-          <%= link_to 'Edit', edit_task_path(@task), class: "btn btn-warning me-2" %>
+          <%= link_to 'Edit task', edit_task_path(@task), class: "btn btn-warning me-2" %>
         <% end %>
         <%= link_to 'Back', tasks_path, class: "btn btn-secondary" %>
       </div>
     </div>
   </div>
 </div>
-<br>
+
